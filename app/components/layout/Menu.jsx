@@ -103,8 +103,7 @@ export default function Menu() {
                 <div className="relative group">
                   <PrimaryButton
                     Type="link"
-                    // Removed PaperAirplaneIcon, can replace with text or leave blank
-                    To="/contact"
+                    to="/login"
                     className="relative flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-[1.03] overflow-hidden"
                   >
                     <span className="relative z-10">Login</span>
