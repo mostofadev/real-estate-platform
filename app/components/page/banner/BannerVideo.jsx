@@ -13,7 +13,10 @@ export default function VideoBanner() {
           loop
           playsInline
         >
-          <source src="/BannerVideo.mp4" type="video/mp4" />
+          <source
+            src="https://mostofadev.cloud/uploads/BannerVideo.mp4"
+            type="video/mp4"
+          />
         </video>
 
         {/* Desktop Only - Overlap FilterService */}
