@@ -13,7 +13,7 @@ export default function VideoBanner() {
           loop
           playsInline
         >
-          <source src="/image/BannerVideo.mp4" type="video/mp4" />
+          <source src="/BannerVideo.mp4" type="video/mp4" />
         </video>
 
         {/* Desktop Only - Overlap FilterService */}
