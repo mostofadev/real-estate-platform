@@ -4,7 +4,7 @@ import { FaMapMarkerAlt,FaBed, FaBath, FaRulerCombined} from "react-icons/fa";
 
 function PropertieCard({ properties }) {
   return (
-    <div className="p-2 border rounded-lg border-gray-200 shadow-md">
+    <div className="p-2 border rounded-lg border-gray-200 shadow-md bg-[var(--bg-one)]">
       <div className="w-full relative">
         <Image
           src={properties.image}

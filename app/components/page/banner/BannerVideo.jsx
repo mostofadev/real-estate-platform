@@ -8,12 +8,13 @@ export default function VideoBanner() {
       <div className="relative w-full min-h-52 sm:min-h-[500px] overflow-hidden">
         <video
           className="absolute top-0 left-0 w-full h-full object-cover filter brightness-70"
-          src="/image/BannerVideo.mp4"
           autoPlay
           muted
           loop
           playsInline
-        />
+        >
+          <source src="/image/BannerVideo.mp4" type="video/mp4" />
+        </video>
 
         {/* Desktop Only - Overlap FilterService */}
         <div className="hidden lg:block absolute left-1/2 bottom-60  translate-y-1/2 -translate-x-1/2 w-full max-w-6xl px-4">
