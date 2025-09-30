@@ -9,8 +9,8 @@ function page() {
     <div>
       <Layout>
         <MarginSection>
-          <div className="lg:mx-50 mx-3 my-42 lg:my-0  ">
-            <div className="p-6  rounded-lg my-8 bg-[var(--bg-one)] border border-[0.5px] border-gray-200">
+          <div className="lg:mx-50 mx-2 my-42 lg:my-0  ">
+            <div className="lg:p-6 p-2  rounded-lg my-8 bg-[var(--bg-one)] border border-[0.5px] border-gray-200">
               <div className="flex gap-4 items-center">
 
                 <div className="w-full lg:block hidden">
@@ -25,7 +25,7 @@ function page() {
                   
                 </div>
 
-                <div className="w-full px-12 ">
+                <div className="w-full px-0 lg:px-12 ">
                   <h2 className="text-2xl my-3 font-bold">Welcome Back to Real Nest!</h2>
                   {/* <p className="text-[12px] my-3">SIng In Your Account</p> */}
                   <RegisterForm />

@@ -7,7 +7,7 @@ function Layout({ children }) {
     <>
       <Menu />
       {children}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

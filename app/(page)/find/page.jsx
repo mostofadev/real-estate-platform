@@ -12,6 +12,7 @@ function page() {
                 <FilterProperties />
                 
                 <PropertiesItems />
+                <div>page</div>
             </MarginSection>
         </Layout>
     </div>

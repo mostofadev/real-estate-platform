@@ -17,7 +17,7 @@ const navigation = [
   { name: "Home", to: "/", id: 1 },
   { name: "Find", to: "/find", id: 2 },
   { name: "About Us", to: "/about", id: 3 },
-  { name: "Blog", to: "/blogs", id: 4 },
+  { name: "Blog", to: "/blog", id: 4 },
   { name: "Contact Us", to: "/contact", id: 5 },
 ];
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaMapMarkerAlt,FaBed, FaBath, FaRulerCombined} from "react-icons/fa";
 
@@ -17,7 +18,7 @@ function PropertieCard({ properties }) {
 
       <div className="p-4">
         <div className="flex justify-between">
-          <h2 className="text-xl font-semibold">{properties.title}</h2>
+          <h2 className="text-xl font-semibold"><Link href={`/property/${properties.id}`}>{properties.title}</Link></h2>
           <span className="text-sm text-[var(--primary-color)] font-bold">{properties.price}</span>
         </div>
         <p className="text-sm text-gray-600 flex gap-3 my-2"><FaMapMarkerAlt /> {properties.location}</p>

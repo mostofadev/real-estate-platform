@@ -2,7 +2,7 @@ import React from "react";
 
 function Input({ Name = "", Type = "text", Placeholder = "", id = "id", Label=""}) {
   return (
-    <div className="my-4">
+    <div className="my-4 w-full">
       <div className="my-2">
          <label htmlFor={id} className="mx-2 text-[12px]">{Label}</label>
       </div>
