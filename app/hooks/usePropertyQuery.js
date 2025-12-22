@@ -7,8 +7,6 @@ export const usePropertyQuery = () => {
     queryFn: async () => {
       try {
         const data = await getPropertyQuery();
-        console.log('getPropertyQuery',data);
-        
         return data;
       } catch (error) {
         console.error("Error fetching property query:", error);

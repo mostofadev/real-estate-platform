@@ -33,7 +33,7 @@ function TestimonialItems() {
         }}
         className="mt-6"
       >
-        {data.map((testimonial) => (
+        {(data ?? []).map((testimonial) => (
           <SwiperSlide key={testimonial.id}>
             <TestimonialCard testimonial={testimonial} />
           </SwiperSlide>

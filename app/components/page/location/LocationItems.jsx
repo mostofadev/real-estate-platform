@@ -29,9 +29,12 @@ function LocationItems() {
     { id: 12, name: "Las Vegas", properties: "160", image: LocationImage },
   ];
   const { data: cityData, isLoading } = useHomePageCity();
-  console.log("city data", cityData);
   if (isLoading) {
     return <PageLoading />;
+  }
+  
+  if (!cityData || cityData.length === 0) {
+    return <p className="text-center text-gray-500 mt-6">No City Date</p>;
   }
   return (
     <div className="w-full ">
@@ -49,7 +52,7 @@ function LocationItems() {
         className="mt-6"
       >
         <div className="w-full">
-          {cityData.map((location) => (
+          {(cityData ?? []).map((location) => (
             <SwiperSlide key={location.id}>
               <LocationCard location={location} />
             </SwiperSlide>

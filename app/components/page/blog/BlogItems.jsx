@@ -13,10 +13,13 @@ import { useHomePageBlog } from "@/app/hooks/useHomePage";
 import PageLoading from "../../ui/loader/PageLoading";
 
 function BlogItems() {
-  const { data,isLoading } = useHomePageBlog();
-   if (isLoading) {
-      return <PageLoading />;
-    }
+  const { data, isLoading } = useHomePageBlog();
+  if (isLoading) {
+    return <PageLoading />;
+  }
+  if (!data || data.length === 0) {
+    return <p className="text-center text-gray-500 mt-6">No Blog Data</p>;
+  }
   return (
     <Swiper
       modules={[Navigation, Pagination, Autoplay]}
@@ -31,7 +34,7 @@ function BlogItems() {
       pagination={{ clickable: true }}
       className="mt-6"
     >
-      {data.map((blog) => (
+      {(data ?? []).map((blog) => (
         <SwiperSlide key={blog.id}>
           <BlogCard blog={blog} />
         </SwiperSlide>
