@@ -3,21 +3,35 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { IoMdMenu, IoMdClose } from "react-icons/io";
 import { usePathname } from "next/navigation";
-
+import { useUserAuthContext } from "@/app/Context/UserAuthContext";
+import { useRouter } from "next/navigation";
 function ProfileMenu() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
+  const { logout } = useUserAuthContext();
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      const res = await logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+      return router.push("/login");
+    }
+  };
   const menuItems = [
-    { name: "Profile", key: "profile", path: "/profile" },
-    { name: "My Properties", key: "myProperties", path: "/my-properties" },
-    { name: "Sell Properties", key: "sellProperties", path: "/sell-properties" },
-    { name: "My Invoices", key: "myInvoices", path: "/my-invoices" },
-    { name: "My Favorites", key: "myFavorites", path: "/my-favorites" },
+    { name: "Profile", key: "profile", path: "/user/profile" },
+    { name: "Properties", key: "myProperties", path: "/user/properties" },
+
+    { name: "Favorites", key: "myFavorites", path: "/user/favorites" },
+    
+    {
+      name: "Change Password",
+      key: "changePassword",
+      path: "/user/profile/password",
+    },
   ];
 
-  const activeClasses =
-    "bg-[var(--primary-color)] text-white font-semibold";
+  const activeClasses = "bg-[var(--primary-color)] text-white font-semibold";
   const defaultClasses =
     "text-gray-300 hover:bg-[var(--primary-color)] hover:text-white";
 
@@ -45,6 +59,14 @@ function ProfileMenu() {
             </Link>
           </li>
         ))}
+        <li className="flex justify-center items-center">
+          <button
+            className={`text-white bg-red-500 py-2 px-4 rounded-md hover:bg-red-400 ${defaultClasses}`}
+            onClick={handleLogout}
+          >
+            Logout
+          </button>
+        </li>
       </ul>
 
       {/* Mobile dropdown menu */}
@@ -63,6 +85,15 @@ function ProfileMenu() {
               </Link>
             </li>
           ))}
+
+          <li className="flex justify-center items-center">
+            <button
+              className={`text-white bg-red-500 py-2 px-4 rounded-md hover:bg-red-400 ${defaultClasses}`}
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </li>
         </ul>
       )}
     </div>

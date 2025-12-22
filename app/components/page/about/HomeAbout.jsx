@@ -28,7 +28,7 @@ function HomeAbout() {
               tortor. Integer a sapien vel felis tincidunt tempor. Curabitur
               blandit magna a erat volutpat.
             </p>
-            <PrimaryButton Icon={<FaArrowRight className="text-white" />}>
+            <PrimaryButton className="inline-block" to="/about" Icon={<FaArrowRight className="text-white" />}>
               Learn More
             </PrimaryButton>
           </div>

@@ -5,11 +5,9 @@ import React from 'react'
 
 function page() {
   return (
-    <Layout>
         <MarginSection>
             <About />
         </MarginSection>
-    </Layout>
   )
 }
 

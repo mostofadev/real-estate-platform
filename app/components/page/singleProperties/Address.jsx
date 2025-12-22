@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import { FaLocationDot } from "react-icons/fa6";
 
-function Address({ street, country, state, city, neighborhood, zip }) {
+function Address({ street, country, state, city, SubDistrict, zip }) {
   const fields = [
     {
       label: "Street:",
@@ -33,8 +33,8 @@ function Address({ street, country, state, city, neighborhood, zip }) {
       icon: <FaHome className="text-[var(--primary-color)]" />,
     },
     {
-      label: "Neighborhood:",
-      value: neighborhood,
+      label: "Sub-district:",
+      value: SubDistrict,
       icon: <FaMapMarkerAlt className="text-[var(--primary-color)]" />,
     },
     {

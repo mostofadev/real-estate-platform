@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-
+import ImageAboutOne from "../../../../public/Image/about.jpeg";
+import Image from "next/image";
 export default function About() {
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -19,19 +20,17 @@ export default function About() {
 
       {/* Company Info */}
       <section className="py-16 max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        <img
-          src="https://source.unsplash.com/600x400/?real-estate,building"
+        <Image
+          src={ImageAboutOne}
           alt="Real Estate"
           className="rounded-2xl shadow-lg"
         />
         <div>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">
-            Who We Are
-          </h2>
+          <h2 className="text-3xl font-bold text-gray-800 mb-4">Who We Are</h2>
           <p className="text-gray-600 leading-relaxed mb-4">
             Our real estate company specializes in residential and commercial
-            properties. We are committed to providing exceptional service to
-            our clients and helping them make informed property decisions.
+            properties. We are committed to providing exceptional service to our
+            clients and helping them make informed property decisions.
           </p>
           <p className="text-gray-600 leading-relaxed">
             With years of experience, our team of agents and advisors ensures
@@ -52,17 +51,23 @@ export default function About() {
             ].map((member, index) => (
               <div
                 key={index}
-                className="p-6 bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition"
+                className=""
               >
-                <img
-                  src={`https://source.unsplash.com/200x200/?face,${index}`}
-                  alt={member.name}
-                  className="w-32 h-32 mx-auto rounded-full mb-4 object-cover"
-                />
-                <h3 className="text-xl font-semibold text-indigo-600">
-                  {member.name}
-                </h3>
-                <p className="text-gray-600">{member.role}</p>
+                <div className="p-6 bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col items-center">
+                  <div className="h-32 w-32 relative">
+                    <Image
+                      src={ImageAboutOne}
+                      alt={member.name}
+                      className="rounded-full object-cover"
+                      fill
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold text-indigo-600 mt-4">
+                    {member.name}
+                  </h3>
+                  <p className="text-gray-600">{member.role}</p>
+                </div>
+               
               </div>
             ))}
           </div>
@@ -71,7 +76,9 @@ export default function About() {
 
       {/* Core Values */}
       <section className="py-16 max-w-6xl mx-auto px-6 text-center">
-        <h2 className="text-3xl font-bold text-gray-800 mb-10">Our Core Values</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-10">
+          Our Core Values
+        </h2>
         <div className="grid md:grid-cols-3 gap-8">
           {[
             {
@@ -106,7 +113,8 @@ export default function About() {
           Ready to Find Your Dream Property?
         </h2>
         <p className="mb-8 max-w-2xl mx-auto text-lg">
-          Contact us today and let our expert team guide you to the perfect property.
+          Contact us today and let our expert team guide you to the perfect
+          property.
         </p>
         <a
           href="/contact"

@@ -20,7 +20,7 @@ export default function VideoBanner() {
         </video>
 
         {/* Desktop Only - Overlap FilterService */}
-        <div className="hidden lg:block absolute left-1/2 bottom-60  translate-y-1/2 -translate-x-1/2 w-full max-w-6xl px-4">
+        <div className="hidden lg:block absolute left-1/2 bottom-60  translate-y-1/2 -translate-x-1/2 w-full max-w-7xl px-4">
           <MarginSection>
             <FilterProduct />
           </MarginSection>
@@ -28,7 +28,7 @@ export default function VideoBanner() {
       </div>
 
       {/* Mobile/Tablet - Separate FilterService */}
-      <div className="block lg:hidden absolute left-1/2 top-[-170px]  translate-y-1/2 -translate-x-1/2 w-full max-w-6xl">
+      <div className="block lg:hidden absolute left-1/2 top-[-170px]  translate-y-1/2 -translate-x-1/2 w-full max-w-7xl">
         <MarginSection>
           <FilterProduct />
         </MarginSection>

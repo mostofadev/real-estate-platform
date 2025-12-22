@@ -2,17 +2,11 @@ import React from "react";
 import PropertyDetailsTable from "./PropertyDetailsTable";
 import InfoFeatures from "./InfoFeatures";
 
-function InfoContent({ activeTabInfo }) {
-    const featureLabels = [
-  "Air Conditioning",
-  "Central Heating",
-  "Fire Alarm",
-  "Home Theater",
-  "Laundry",
-  "Laundry Room",
-  "Sauna",
-  "WiFi",
-];
+function InfoContent({ activeTabInfo, Details }) {
+  console.log("details fea", Details.features);
+  const DetailsFeatures = Details.features;
+  console.log();
+  
   return (
     <div>
       <div className="mt-4 p-2 lg:p-4">
@@ -20,17 +14,16 @@ function InfoContent({ activeTabInfo }) {
           <div>
             <PropertyDetailsTable
               details={[
-                { label: "Property ID", value: "663" },
-                { label: "Price", value: "$1 M" },
-                { label: "Property Type", value: "Restaurant" },
-                { label: "Property Status", value: "For Rent" },
-                { label: "Bedrooms", value: "4" },
-                { label: "Bathrooms", value: "3" },
-                { label: "Year Built", value: "2010" },
-                { label: "Size", value: "200 SqFt" },
-                { label: "Land Area", value: "500 SqFt" },
-                { label: "Garages", value: "1" },
-                { label: "Garage Size", value: "40 SqFt" },
+                { label: "Property ID", value: Details.property_uid },
+                { label: "Price", value: Details.price },
+                { label: "Property Category", value: Details.category.name },
+                { label: "Property Type", value: Details.type.name },
+                { label: "Bedrooms", value: Details.bedrooms },
+                { label: "Bathrooms", value: Details.bathrooms },
+                { label: "Year Built", value: Details.years_build },
+                { label: "Land Area", value: Details.land_area },
+                { label: "Garages", value: Details.garages ? "Yes" : "No" },
+                { label: "Garage Size", value: Details.garage_size },
               ]}
             />
           </div>
@@ -38,7 +31,13 @@ function InfoContent({ activeTabInfo }) {
 
         {activeTabInfo === "features" && (
           <div className="flex justify-center items-center w-full ">
-             <InfoFeatures labels={featureLabels} />
+            {Array.isArray(DetailsFeatures) && DetailsFeatures.length > 0 ? (
+              DetailsFeatures.map((item) => (
+                <InfoFeatures key={item.id} labels={item.name} />
+              ))
+            ) : (
+              <p className="text-gray-500 font-medium">No Feature</p>
+            )}
           </div>
         )}
 

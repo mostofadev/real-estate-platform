@@ -22,3 +22,35 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+/* Leaflet Map Z-Index Control */
+.leaflet-container {
+  z-index: 0 !important;
+}
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 0 !important;
+}
+
+.leaflet-control-zoom {
+  z-index: 1 !important;
+}
+
+.leaflet-control-attribution {
+  z-index: 1 !important;
+}
+
+/* Ensure map controls don't go above navbar */
+.leaflet-popup-pane {
+  z-index: 2 !important;
+}
+
+.leaflet-marker-pane {
+  z-index: 3 !important;
+}
+
+/* Make sure these stay below your navbar (which should have z-50 or z-40) */
+.leaflet-overlay-pane {
+  z-index: 0 !important;
+}

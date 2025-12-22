@@ -1,5 +1,7 @@
 import { Poppins, Inter, Montserrat, Open_Sans } from "next/font/google";
 import "./globals.css";
+import ClientOnlyWrapper from "@/providers/ClientOnlyWrapper";
+import "leaflet/dist/leaflet.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -33,7 +35,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${poppins.variable} ${inter.variable} ${montserrat.variable} ${openSans.variable} antialiased`}
       >
-        {children}
+        <ClientOnlyWrapper>{children}</ClientOnlyWrapper>
       </body>
     </html>
   );

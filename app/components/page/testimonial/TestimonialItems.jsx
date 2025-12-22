@@ -11,41 +11,13 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { useHomePageTestimonial } from "@/app/hooks/useHomePage";
+import PageLoading from "../../ui/loader/PageLoading";
 function TestimonialItems() {
-  const testimonials = [
-    {
-      id: 1,
-      name: "John Doe",
-      profession: "CEO, Company A",
-      description:
-        "Mostofa Kamal did an amazing job on our website. Highly recommend!",
-      Image: "/Image/location.png",
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      profession: "Founder, Startup B",
-      description:
-        "The website looks professional and increased our client trust.",
-      Image: "/Image/location.png",
-    },
-    {
-      id: 3,
-      name: "Mike Johnson",
-      profession: "Manager, Business C",
-      description: "Fast, reliable, and very creative work. Loved the design!",
-      Image: "/Image/location.png",
-    },
-    {
-      id: 4,
-      name: "Sara Williams",
-      profession: "Designer, Creative Studio",
-      description: "Highly skilled developer, delivered everything on time!",
-          Image: "/Image/location.png", 
-
-    },
-  ];
-
+  const { data, isLoading } = useHomePageTestimonial();
+  if (isLoading) {
+    return <PageLoading />;
+  }
   return (
     <>
       <Swiper
@@ -61,7 +33,7 @@ function TestimonialItems() {
         }}
         className="mt-6"
       >
-        {testimonials.map((testimonial) => (
+        {data.map((testimonial) => (
           <SwiperSlide key={testimonial.id}>
             <TestimonialCard testimonial={testimonial} />
           </SwiperSlide>

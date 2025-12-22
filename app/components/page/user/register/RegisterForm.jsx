@@ -1,77 +1,112 @@
-import SubmitButton from "@/app/components/ui/button/SubmitButton";
-import Input from "@/app/components/ui/formAction/Input";
+"use client";
 import Link from "next/link";
 import React from "react";
 import GoogleLoginButton from "../login/GoogleLogin";
-import Select from "@/app/components/ui/formAction/Select";
-
+import { registerSchema } from "@/app/Schema/RegisterSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useUserAuthContext } from "@/app/Context/UserAuthContext";
+import { useRouter } from "next/navigation";
+import TextInput from "@/app/components/ui/formAction/TextInput";
+import FormButton from "@/app/components/ui/button/SubmitButton";
 function RegisterForm() {
+  const router = useRouter();
+  const { registerUser, loading } = useUserAuthContext();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({
+    resolver: zodResolver(registerSchema),
+    mode:"onChange",
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+      phone: "",
+    },
+  });
+
+  const onSubmit = async (data) => {
+
+ 
+      const AppData = new FormData();
+      AppData.append("name", data.name);
+      AppData.append("email", data.email);
+      AppData.append("password", data.password);
+      AppData.append("phone", data.phone);
+
+      const user = await registerUser(AppData);
+      if (user) {
+        router.push("/user/profile");
+      }
+    
+  };
+
   return (
     <div className="w-full">
-      <form action="" method="post">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="my-4">
-          <Input
-            Name="name"
-            Type="text"
-            Placeholder="Enter name"
-            id="name"
-            Label="Enter name"
+          <TextInput
+            name="name"
+            type="text"
+            placeholder="Enter name"
+            {...register("name")}
+            label="Enter name"
           />
+          {errors.name && (
+            <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
+          )}
         </div>
         <div className="my-4">
-          <Input
-            Name="email"
-            Type="email"
-            Placeholder="Enter Email"
-            id="id"
-            Label="Enter Email"
+          <TextInput
+            name="email"
+            type="email"
+            placeholder="Enter Email"
+            {...register("email")}
+            label="Enter Email"
           />
+          {errors.email && (
+            <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+          )}
         </div>
         <div className="my-4">
-          <Input
-            Name="password"
-            Type="password"
-            Placeholder="Enter Password"
-            id="password"
-            Label="Enter Password"
+          <TextInput
+            name="password"
+            type="password"
+            placeholder="Enter Password"
+            {...register("password")}
+            label="Enter Password"
           />
-        </div>
-        <div className="my-4">
-             <Select
-        Label="Choose Country"
-        Name="country"
-        Options={[
-          { value: "Buyer", label: "Buyer" },
-          { value: "agent", label: "agent" },
-          { value: "owner", label: "owner" },
-        ]}
-      />
-        </div>
-        <div className="my-4">
-          <Input
-            Name="phone"
-            Type="number"
-            Placeholder="Enter Phone"
-            id="phone"
-            Label="Enter Phone"
-          />
+          {errors.password && (
+            <p className="text-red-500 text-sm mt-1">
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
-        <div className="flex justify-between">
-          <div className="flex gap-2">
-            <input name="remember" type="checkbox" />
-            <label htmlFor="box" className="text-[12px]">
-              Remember Me
-            </label>
-          </div>
-
-          <Link className="text-[12px] text-gray-400" href={"/"}>
-            Forgot Password?
-          </Link>
+        <div className="my-4">
+          <TextInput
+            name="phone"
+            type="number"
+            placeholder="Enter Phone"
+            {...register("phone")}
+            label="Enter Phone"
+          />
+          {errors.phone && (
+            <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+          )}
         </div>
 
         <div className="my-6">
-          <SubmitButton>Register</SubmitButton>
+          <FormButton
+            type="submit"
+            IsValid={isValid}
+            loading={isSubmitting}
+            ClassName="w-full"
+          >
+            Register
+          </FormButton>
         </div>
 
         <div className="relative text-center text-sm text-gray-400">
@@ -85,7 +120,11 @@ function RegisterForm() {
 
         <div className="my-6">
           <p className="text-center text-[12px]">
-          have you any Account?<Link className="text-blue-500" href={"/login"}> Login</Link>
+            have you any Account?
+            <Link className="text-blue-500" href={"/login"}>
+              {" "}
+              Login
+            </Link>
           </p>
         </div>
       </form>

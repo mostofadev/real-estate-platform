@@ -1,40 +1,57 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { FaMapMarkerAlt,FaBed, FaBath, FaRulerCombined} from "react-icons/fa";
+import { FaMapMarkerAlt, FaBed, FaBath, FaRulerCombined } from "react-icons/fa";
 
 function PropertieCard({ properties }) {
+ 
+  const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL;
+
   return (
     <div className="p-2 border rounded-lg border-gray-200 shadow-md bg-[var(--bg-one)]">
       <div className="w-full relative">
         <Image
-          src={properties.image}
-          alt="Property Image"
+          src={`${STORAGE_URL}${properties.image_url}`}
+          alt={properties.title || "Property Image"}
           width={400}
           height={300}
           className="rounded-lg w-full"
+          unoptimized={true}
         />
+        {/* <img src={`${STORAGE_URL}${properties.image_url}`}  alt={properties.title || "Property Image"} /> */}
       </div>
 
       <div className="p-4">
         <div className="flex justify-between">
-          <h2 className="text-xl font-semibold"><Link href={`/property/${properties.id}`}>{properties.title}</Link></h2>
-          <span className="text-sm text-[var(--primary-color)] font-bold">{properties.price}</span>
+          <h2 className="text-xl font-semibold">
+            <Link href={`/property/${properties.id}`}>{properties.title}</Link>
+          </h2>
+          <span className="text-sm text-[var(--primary-color)] font-bold">
+            {properties.price}
+          </span>
         </div>
-        <p className="text-sm text-gray-600 flex gap-3 my-2"><FaMapMarkerAlt /> {properties.location}</p>
+        <p className="text-sm text-gray-600 flex gap-3 my-2">
+          <FaMapMarkerAlt /> {properties.full_location}
+        </p>
       </div>
       <div className="flex justify-between p-2 border-t  border-gray-100">
         <div className="flex items-center border-r  border-gray-100">
           <FaBed className="text-gray-600" />
-          <span className="text-sm text-gray-600 ml-1">{properties.bedrooms} Bedrooms</span>
+          <span className="text-sm text-gray-600 ml-1">
+            {properties.bedrooms} Bedrooms
+          </span>
         </div>
         <div className="flex items-center">
           <FaBath className="text-gray-600" />
-          <span className="text-sm text-gray-600 ml-1">{properties.bathrooms} Bathrooms</span>
+          <span className="text-sm text-gray-600 ml-1">
+            {properties.bathrooms} Bathrooms
+          </span>
         </div>
         <div className="flex items-center">
           <FaRulerCombined className="text-gray-600" />
-          <span className="text-sm text-gray-600 ml-1">{properties.area} sqft</span>
+          <span className="text-sm text-gray-600 ml-1">
+            {properties.area} sqft
+          </span>
         </div>
       </div>
     </div>

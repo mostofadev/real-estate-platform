@@ -35,7 +35,7 @@ function Details({ Property_id, Size, Bedrooms, Bathrooms }) {
   ];
 
   return (
-    <div className="bg-[#f6f6f6] px-4 shadow-md p-6 border border-gray-200 ">
+    <div className="bg-[#f6f6f6] p-2 shadow-md  border border-gray-200 ">
       <ul className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
         {details.map((item, idx) => (
           <li

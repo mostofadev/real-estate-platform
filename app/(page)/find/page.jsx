@@ -1,22 +1,11 @@
-import Layout from '@/app/components/layout/Layout'
-import FilterProperties from '@/app/components/page/find/FilterProperties'
-import PropertiesItems from '@/app/components/page/find/PropertiesItems'
-import MarginSection from '@/app/components/sections/MarginSection'
-import React from 'react'
+import { Suspense } from "react";
+import PageLoading from "@/app/components/ui/loader/PageLoading";
+import FindClient from "@/app/components/page/find/FindClient";
 
-function page() {
+export default function Page() {
   return (
-    <div>
-        <Layout>
-            <MarginSection >
-                <FilterProperties />
-                
-                <PropertiesItems />
-                <div>page</div>
-            </MarginSection>
-        </Layout>
-    </div>
-  )
+    <Suspense fallback={<PageLoading />}>
+      <FindClient />
+    </Suspense>
+  );
 }
-
-export default page

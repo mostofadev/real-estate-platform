@@ -1,60 +1,117 @@
 "use client";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Controller, useForm } from "react-hook-form";
 import PrimaryButton from "../button/Primary";
-import { IoIosColorFilter } from "react-icons/io";
-import Link from "next/link";
+import { usePropertyQuery } from "@/app/hooks/usePropertyQuery";
+import TextInput from "../formAction/TextInput";
+import SelectInput from "../formAction/SeleteInput";
+import PageLoading from "../loader/PageLoading";
 
 export default function FilterMenu() {
-  const [active, setActive] = useState(1);
+  const router = useRouter();
+  const { data: responseData, isLoading } = usePropertyQuery();
+  const types = responseData?.data?.types ?? [];
+  const categories = responseData?.data?.categories ?? [];
+
+  const { register, handleSubmit, control } = useForm({
+    defaultValues: {
+      location: "",
+      property_type_id: "",
+      category_id: "",
+      price_min: "",
+      price_max: "",
+    },
+  });
+
+  const onSubmit = (formData) => {
+    const query = new URLSearchParams();
+    if (formData.location) query.append("location", formData.location);
+    if (formData.property_type_id)
+      query.append("property_type_id", formData.property_type_id);
+    if (formData.category_id) query.append("category_id", formData.category_id);
+    if (formData.price_min) query.append("price_min", formData.price_min);
+    if (formData.price_max) query.append("price_max", formData.price_max);
+
+    router.push(`/find?${query.toString()}`);
+  };
+
+  if (isLoading) return <PageLoading />;
 
   return (
-    <div className="bg-[var(--bg-one)] rounded-lg  border border-gray-50 p-4 shadow-sm mt-[37px] lg:mt-[70px] z-100 ">
-      <ul className="flex items-center justify-center gap-4 flex-wrap ">
-        <li className="mx-3">
-          {/* <label
-            htmlFor="all"
-            className="cursor-pointer px-4 py-2  text-sm "
-          >
-            Location
-          </label> */}
-          <input
-            type="search"
-            name="location"
-            id="all"
-            className="peer outline-none  bg-[var(--bg-one)] px-6 py-3  border-none lg:border-r border-gray-200 w-full"
-            placeholder="Search location"
-            checked={active === 1}
-            onChange={() => setActive(1)}
-          />
-        </li>
-        <li className="mx-3">
-          <select name="type" id="" className="peer outline-none  bg-[var(--bg-one)] px-12 py-3 w-full border-none lg:border-r border-gray-200">
-            <option value="apartment" className="disabled">Type</option>
-            <option value="apartment">Apartment</option>
-            <option value="house">House</option>
-            <option value="condo">Condo</option>
-            <option value="townhouse">Townhouse</option>
-            <option value="office">Office</option>
-          </select>
-        </li>
-        <li className="mx-3">
-          <input
-            type="date"
-            name="date"
-            id=""
-            className="peer outline-none  bg-[var(--bg-one)] px-5 py-3  border-none lg:border-r border-gray-200 "
-          />
-        </li>
-        <li className="border border-[0.5px] border-gray-200 mx-3 px-3 py-3 rounded-lg">
-          <IoIosColorFilter className="inline mr-2 text-2xl text-[#9d4edd]" />
-          <Link href="/filter" className="text-sm font-medium hover:underline">
-            Filter
-          </Link>
-        </li>
-        <li className="mx-3">
-          <PrimaryButton>Search</PrimaryButton>
-        </li>
-      </ul>
+    <div className="bg-[var(--bg-one)] rounded-lg  border border-gray-200 px-5 py-6 shadow-sm mt-6 w-full mx-12 flex justify-center items-center">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <ul className="flex flex-col lg:flex-row justify-center items-center lg:flex-wrap gap-4 w-full ">
+          {/* Location */}
+          <li className="flex-1 w-full">
+            <TextInput
+              MarginB={false}
+              type="text"
+              {...register("location")}
+              placeholder="Location"
+              className="w-full"
+            />
+          </li>
+
+          {/* Price Min */}
+          <li className="flex-1 hidden w-full lg:block">
+            <TextInput
+              type="number"
+               MarginB={false}
+              {...register("price_min")}
+              placeholder="Min Price"
+              className="w-full"
+            />
+          </li>
+
+          {/* Price Max */}
+          <li className="flex-1 hidden w-full lg:block">
+            <TextInput
+              type="number"
+               MarginB={false}
+              {...register("price_max")}
+              placeholder="Max Price"
+              className="w-full"
+            />
+          </li>
+
+          {/* Property Type */}
+          <li className="flex-1 w-full">
+            <Controller
+              control={control}
+              name="property_type_id"
+              render={({ field }) => (
+                <SelectInput
+                  {...field}
+                  options={types.map((t) => ({ value: t.id, label: t.name }))}
+                  className="w-full"
+                />
+              )}
+            />
+          </li>
+
+          {/* Category */}
+          <li className="flex-1 w-full">
+            <Controller
+              control={control}
+              name="category_id"
+              render={({ field }) => (
+                <SelectInput
+                  {...field}
+                  options={categories.map((c) => ({ value: c.id, label: c.name }))}
+                  className="w-full"
+                />
+              )}
+            />
+          </li>
+
+          {/* Submit Button */}
+          <li className="flex-1">
+            <PrimaryButton type="submit" className="w-full text-center">
+              Search
+            </PrimaryButton>
+          </li>
+        </ul>
+      </form>
     </div>
   );
 }

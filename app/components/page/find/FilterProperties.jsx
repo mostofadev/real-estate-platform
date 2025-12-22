@@ -1,231 +1,184 @@
 "use client";
-import { useState } from "react";
-import { IoIosColorFilter } from "react-icons/io";
-import Link from "next/link";
-import PrimaryButton from "../../ui/button/Primary";
+
+import { useState, useEffect } from "react";
 import FilterInput from "../../ui/filter/ui/FilterInput";
 import FilterSelect from "../../ui/filter/ui/FilterSelect";
+import LeafletMapInput from "./LeafletMapInput";
 
-export default function FilterProperties() {
-  const [active, setActive] = useState(1);
+export default function PropertySidebarFilter({ filters, setFilters,setSidebarOpen }) {
+  const handleChange = (e) => {
+    setFilters((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
 
-  const propertyTypes = [
-    { value: "apartment", label: "Apartment" },
-    { value: "house", label: "House" },
-    { value: "condo", label: "Condo" },
-    { value: "townhouse", label: "Townhouse" },
-    { value: "office", label: "Office" },
-  ];
-
-  const bedrooms = [
-    { value: "1", label: "1+" },
-    { value: "2", label: "2+" },
-    { value: "3", label: "3+" },
-    { value: "4", label: "4+" },
-  ];
-
-  const bathrooms = [
-    { value: "1", label: "1+" },
-    { value: "2", label: "2+" },
-    { value: "3", label: "3+" },
-    { value: "4", label: "4+" },
-  ];
-
-  const statusOptions = [
-    { value: "sale", label: "For Sale" },
-    { value: "rent", label: "For Rent" },
-    { value: "new", label: "New Project" },
-  ];
-
-  const sortOptions = [
-    { value: "newest", label: "Newest" },
-    { value: "lowToHigh", label: "Price: Low to High" },
-    { value: "highToLow", label: "Price: High to Low" },
-    { value: "popular", label: "Most Popular" },
-  ];
+  const handleMapSelect = (lat, lng) => {
+    setFilters((prev) => ({
+      ...prev,
+      lat,
+      lng,
+    }));
+  };
 
   return (
-    <div className="bg-[var(--bg-one)] rounded-xl border border-gray-200 p-4 shadow-md  my-20">
-      <div className="">
-        <ul className="">
-          <div className="flex gap-4 my-6 justify-between px-20">
-            {/* Keyword */}
-            <li className="flex-shrink-0">
-              <FilterInput
-                placeholder="Enter Keyword..."
-                id="keyword"
-                name="keyword"
-                active={active}
-                setActive={setActive}
-                index={1}
-              />
-            </li>
+    <div className="md:w-90  w-60  max-h-[90vh]">
+      <h2 className="text-lg font-semibold mb-4 text-gray-800">
+        🏠 Filter Properties
+      </h2>
+       <div className="" onClick={()=> setSidebarOpen(false)}>
+        x
+       </div>
+      <div className="space-y-4">
+        {/* 🔍 Search Location */}
+        <FilterInput
+          placeholder="Search Location"
+          name="location"
+          value={filters.location}
+          onChange={handleChange}
+        />
 
-            {/* Location */}
-            <li className="flex-shrink-0">
-              <FilterInput
-                placeholder="Search Location"
-                id="location"
-                name="location"
-                active={active}
-                setActive={setActive}
-                index={2}
-              />
-            </li>
+        {/* 📍 Division */}
+        <FilterSelect
+          Label="Division"
+          name="division_id"
+          Options={[
+            { value: "1", label: "Dhaka" },
+            { value: "2", label: "Chittagong" },
+            { value: "3", label: "Rajshahi" },
+            { value: "4", label: "Khulna" },
+          ]}
+          DefaultOption="Select Division"
+          value={filters.division_id}
+          onChange={handleChange}
+        />
 
-            {/* Min Price */}
-            <li className="flex-shrink-0">
-              <FilterInput
-                placeholder="Min Price"
-                id="min"
-                name="min"
-                active={active}
-                setActive={setActive}
-                index={3}
-              />
-            </li>
+        {/* 🏙️ District */}
+        <FilterSelect
+          Label="District"
+          name="district_id"
+          Options={[
+            { value: "1", label: "Dhaka" },
+            { value: "2", label: "Gazipur" },
+            { value: "3", label: "Narayanganj" },
+          ]}
+          DefaultOption="Select District"
+          value={filters.district_id}
+          onChange={handleChange}
+        />
 
-            {/* Max Price */}
-            <li className="flex-shrink-0">
-              <FilterInput
-                placeholder="Max Price"
-                id="max"
-                name="max"
-                active={active}
-                setActive={setActive}
-                index={4}
-              />
-            </li>
-            {/* Min Area */}
-            <li className="flex-shrink-0">
-              <FilterInput
-                placeholder="Min Area (sqft)"
-                id="minArea"
-                name="minArea"
-                active={active}
-                setActive={setActive}
-                index={9}
-              />
-            </li>
+        {/* 🏢 Property Type */}
+        <FilterSelect
+          Label="Property Type"
+          name="property_type_id"
+          Options={[
+            { value: "1", label: "Apartment" },
+            { value: "2", label: "House" },
+            { value: "3", label: "Condo" },
+            { value: "4", label: "Office" },
+          ]}
+          DefaultOption="Select Type"
+          value={filters.property_type_id}
+          onChange={handleChange}
+        />
 
-            {/* Max Area */}
-            <li className="flex-shrink-0">
-              <FilterInput
-                placeholder="Max Area (sqft)"
-                id="maxArea"
-                name="maxArea"
-                active={active}
-                setActive={setActive}
-                index={10}
-              />
-            </li>
-            
-          </div>
+        {/* 💰 Price Range */}
+        <div className="grid grid-cols-2 gap-2">
+          <FilterInput
+            placeholder="Min Price"
+            name="price_min"
+            value={filters.price_min}
+            onChange={handleChange}
+          />
+          <FilterInput
+            placeholder="Max Price"
+            name="price_max"
+            value={filters.price_max}
+            onChange={handleChange}
+          />
+        </div>
 
-          <div className="flex gap-4 my-6 justify-between px-20">
-            {/* Bathrooms */}
-            <li className="flex-shrink-0">
-              <FilterSelect
-                Label="Bathrooms"
-                id="bathrooms"
-                name="bathrooms"
-                Options={bathrooms}
-                DefaultOption="Select Bathrooms"
-                active={active}
-                setActive={setActive}
-                index={7}
-              />
-            </li>
+        {/* 📐 Area Range */}
+        <div className="grid grid-cols-2 gap-2">
+          <FilterInput
+            placeholder="Min Area (sqft)"
+            name="area_min"
+            value={filters.area_min}
+            onChange={handleChange}
+          />
+          <FilterInput
+            placeholder="Max Area (sqft)"
+            name="area_max"
+            value={filters.area_max}
+            onChange={handleChange}
+          />
+        </div>
 
-            {/* Status */}
-            <li className="flex-shrink-0">
-              <FilterSelect
-                Label="Status"
-                id="status"
-                name="status"
-                Options={statusOptions}
-                DefaultOption="Select Status"
-                active={active}
-                setActive={setActive}
-                index={8}
-              />
-            </li>
+        {/* 🛏️ Bedrooms */}
+        <FilterSelect
+          Label="Bedrooms"
+          name="bedrooms"
+          Options={[
+            { value: "1", label: "1+" },
+            { value: "2", label: "2+" },
+            { value: "3", label: "3+" },
+            { value: "4", label: "4+" },
+          ]}
+          DefaultOption="Select Bedrooms"
+          value={filters.bedrooms}
+          onChange={handleChange}
+        />
 
-{/* Property Type */}
-            <li className="flex-shrink-0">
-              <FilterSelect
-                Label="Property Type"
-                id="type"
-                name="type"
-                Options={propertyTypes}
-                DefaultOption="Select Type"
-                active={active}
-                setActive={setActive}
-                index={5}
-              />
-            </li>
+        {/* 🚿 Bathrooms */}
+        <FilterSelect
+          Label="Bathrooms"
+          name="bathrooms"
+          Options={[
+            { value: "1", label: "1+" },
+            { value: "2", label: "2+" },
+            { value: "3", label: "3+" },
+            { value: "4", label: "4+" },
+          ]}
+          DefaultOption="Select Bathrooms"
+          value={filters.bathrooms}
+          onChange={handleChange}
+        />
 
-            {/* Bedrooms */}
-            <li className="flex-shrink-0">
-              <FilterSelect
-                Label="Bedrooms"
-                id="bedrooms"
-                name="bedrooms"
-                Options={bedrooms}
-                DefaultOption="Select Bedrooms"
-                active={active}
-                setActive={setActive}
-                index={6}
-              />
-            </li>
+        {/* 🏷️ Property Status */}
+        <FilterSelect
+          Label="Status"
+          name="status"
+          Options={[
+            { value: "for_sale", label: "For Sale" },
+            { value: "for_rent", label: "For Rent" },
+            { value: "sold", label: "Sold" },
+          ]}
+          DefaultOption="Select Status"
+          value={filters.status}
+          onChange={handleChange}
+        />
 
+        {/* 🗓️ Available From */}
+        <FilterInput
+          type="date"
+          name="available_from"
+          value={filters.available_from}
+          onChange={handleChange}
+        />
 
+        {/* ⚙️ Sort By */}
+        <FilterSelect
+          Label="Sort By"
+          name="sort"
+          Options={[
+            { value: "price_asc", label: "Price (Low to High)" },
+            { value: "price_desc", label: "Price (High to Low)" },
+            { value: "newest", label: "Newest" },
+          ]}
+          DefaultOption="Sort By"
+          value={filters.sort}
+          onChange={handleChange}
+        />
 
-
-
-            {/* Date */}
-            <li className="flex-shrink-0">
-              <input
-                type="date"
-                name="date"
-                id="date"
-                className="px-4 py-3 border border-gray-300 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#9d4edd] focus:border-transparent"
-              />
-            </li>
-
-            {/* Sort By */}
-            <li className="flex-shrink-0">
-              <FilterSelect
-                Label="Sort By"
-                id="sort"
-                name="sort"
-                Options={sortOptions}
-                DefaultOption="Sort By"
-                active={active}
-                setActive={setActive}
-                index={11}
-              />
-            </li>
-          </div>
-
-          <div className="flex justify-center gap-4">
-            {/* Filter Button */}
-            <li className="flex-shrink-0 border border-gray-300 rounded-lg px-3 py-2 flex items-center hover:shadow-md transition">
-              <IoIosColorFilter className="text-2xl text-[#9d4edd] mr-2" />
-              <Link
-                href="/filter"
-                className="text-sm font-medium hover:underline"
-              >
-                Filter
-              </Link>
-            </li>
-
-            {/* Search Button */}
-            <li className="flex-shrink-0">
-              <PrimaryButton>Search</PrimaryButton>
-            </li>
-          </div>
-        </ul>
+        {/* 🗺️ Map Input */}
+       
       </div>
     </div>
   );

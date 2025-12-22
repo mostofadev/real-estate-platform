@@ -12,6 +12,8 @@ import { usePathname } from "next/navigation";
 import Logo from "./Logo";
 import MarginSection from "../sections/MarginSection";
 import PrimaryButton from "../ui/button/Primary";
+import { getTokenFromLocal } from "@/lib/getTokenFromLocal";
+import ProfileLoginButton from "./ProfileLoginButton";
 
 const navigation = [
   { name: "Home", to: "/", id: 1 },
@@ -101,14 +103,7 @@ export default function Menu() {
 
               <div className="absolute inset-y-0 right-0 flex items-center gap-3 pr-2 lg:static lg:inset-auto lg:ml-6 lg:pr-0">
                 <div className="relative group">
-                  <PrimaryButton
-                    Type="link"
-                    to="/login"
-                    className="relative flex items-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-[1.03] overflow-hidden"
-                  >
-                    <span className="relative z-10">Login</span>
-                    <span className="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  </PrimaryButton>
+                  <ProfileLoginButton />
                 </div>
               </div>
             </div>

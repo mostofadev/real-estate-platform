@@ -1,17 +1,22 @@
-import React, { Children } from 'react'
+import BtnSpinner from "../../loader/BtnSniper";
 
-function SubmitButton({children,ClassName}) {
+export default function FormButton({ ClassName,Icon, IsValid, children, loading = false, ...props }) {
   return (
-    <div className='flex justify-center'>
-        <button 
-        type='submit' 
-        className={` bg-[var(--primary-color)] hover:bg-[#9e60d1;] cursor-pointer text-white font-bold py-3 px-6 rounded-full w-full shadow-md  ${ClassName}`}
-
-        >
-            {children}
-        </button>
-    </div>
+  <button
+  {...props}
+ // disabled={IsValid || props.disabled}
+  className={`${ClassName} ${
+    !IsValid ? "bg-[#c99fec]" : "bg-[var(--primary-color)] hover:bg-[#a068ce]"
+  } text-sm text-white py-2 px-12 rounded-lg flex justify-center items-center gap-2 transition duration-300 min-w-[160px]`}
+>
+  {loading ? (
+    <BtnSpinner size={5} />
+  ) : (
+    <>
+      {Icon}
+      {children}
+    </>
+  )}
+</button>
   )
 }
-
-export default SubmitButton
