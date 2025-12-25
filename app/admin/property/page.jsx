@@ -19,7 +19,6 @@ export default function Page() {
   const { mutate: DeleteProperty, error: DeleteError } =
     useAdminPropertyDelete();
 
-  console.log("property lol", data);
 
   const properties = data?.data || [];
   const pagination = data

@@ -23,6 +23,7 @@ export default function DynamicTable({
 }) {
   // Check if any action handler is provided
   const hasActions = onDelete || onView || onUpdate || onUpdateStatus;
+  const STORAGE_URL = process.env.NEXT_PUBLIC_STORAGE_URL;
 
   // Calculate starting number for current page
   const getRowNumber = (index) => {
@@ -53,7 +54,7 @@ export default function DynamicTable({
                 <TableCell key={colIndex}>
                   {col.field === imageField ? (
                     <img
-                      src={`http://localhost:8000/${item[col.field]}`}
+                      src={`${STORAGE_URL}${item[col.field]}`}
                       alt={item.title}
                       width={60}
                       className="rounded-md"
