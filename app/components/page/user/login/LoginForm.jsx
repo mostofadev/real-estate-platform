@@ -120,9 +120,9 @@ function LoginForm() {
           <div className="absolute inset-0 top-2 border-t border-gray-300"></div>
         </div>
 
-        <div className="my-4">
+        {/* <div className="my-4">
           <GoogleLoginButton />
-        </div>
+        </div> */}
 
         <div className="my-6">
           <p className="text-center text-[12px]">
