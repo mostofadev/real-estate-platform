@@ -30,8 +30,8 @@ export default function FindClient() {
   const router = useRouter();
   // property types + categories
   const { data: responseData } = usePropertyQuery();
-  const types = responseData?.data?.types ?? [];
-  const categories = responseData?.data?.categories ?? [];
+  const types = responseData?.types ?? [];
+  const categories = responseData?.categories ?? [];
 
   // React Hook Form
   const { register, handleSubmit, watch, setValue, control } = useForm({
