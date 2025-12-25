@@ -1,6 +1,9 @@
 "use client";
 import React from "react";
 import ImageAboutOne from "../../../../public/Image/about.jpeg";
+import ImageOne from "../../../../public/team/t2.png";
+import ImageTwo from "../../../../public/team/t3.png";
+import ImageThree from "../../../../public/team/t4.png";
 import Image from "next/image";
 export default function About() {
   return (
@@ -45,9 +48,9 @@ export default function About() {
           <h2 className="text-3xl font-bold text-gray-800 mb-10">Our Team</h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
             {[
-              { name: "John Doe", role: "CEO" },
-              { name: "Jane Smith", role: "Lead Agent" },
-              { name: "Mike Johnson", role: "Property Advisor" },
+              { name: "John Doe", role: "CEO",ImageUrl: ImageOne },
+              { name: "Jane Smith", role: "Lead Agent",ImageUrl: ImageTwo },
+              { name: "Mike Johnson", role: "Property Advisor",ImageUrl: ImageThree },
             ].map((member, index) => (
               <div
                 key={index}
@@ -56,7 +59,7 @@ export default function About() {
                 <div className="p-6 bg-gray-50 rounded-2xl shadow-md hover:shadow-lg transition flex flex-col items-center">
                   <div className="h-32 w-32 relative">
                     <Image
-                      src={ImageAboutOne}
+                      src={member.ImageUrl}
                       alt={member.name}
                       className="rounded-full object-cover"
                       fill
