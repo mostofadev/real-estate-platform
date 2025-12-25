@@ -10,8 +10,8 @@ import PageLoading from "../loader/PageLoading";
 export default function FilterMenu() {
   const router = useRouter();
   const { data: responseData, isLoading } = usePropertyQuery();
-  const types = responseData?.data?.types ?? [];
-  const categories = responseData?.data?.categories ?? [];
+  const types = responseData?.types ?? [];
+  const categories = responseData?.categories ?? [];
 
   const { register, handleSubmit, control } = useForm({
     defaultValues: {
