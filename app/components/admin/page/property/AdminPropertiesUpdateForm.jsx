@@ -13,6 +13,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import FormButton from "@/app/components/ui/button/SubmitButton";
 import { fullUpdateSchema, PropertiesUpdateSchemas } from "@/app/Schema/PropertiesUpdateSchema";
+import PageLoading from "@/app/components/ui/loader/PageLoading";
 
 // Dynamic step components
 const PropertyBasicInfoStep = dynamic(() =>
@@ -41,9 +42,6 @@ export default function AdminPropertiesUpdateForm({ propertyId }) {
   const [currentStep, setCurrentStep] = useState(0);
   const { mutate, isPending } = useAdminPropertyUpdate(propertyId);
   const { data: propertyData, isLoading } = useAdminPropertySingle(propertyId);
-  
-  console.log('Single update property:', propertyData);
-    
   const steps = [
     PropertyBasicInfoStep,
     PropertyLocationCategoryStep,
@@ -82,23 +80,10 @@ export default function AdminPropertiesUpdateForm({ propertyId }) {
   useEffect(() => {
     if (propertyData) {
       const property = propertyData;
-      
-      console.log('Property data for reset:', {
-        country_id: property.country_id,
-        division_id: property.division_id,
-        district_id: property.district_id,
-        sub_district_id: property.sub_district_id,
-        category_id: property.category_id,
-        property_type_id: property.property_type_id,
-        features: property.features,
-        image_url: property.image_url,
-        images: property.images,
-      });
-
       // Set existing images
       setExistingImages({
         main: property.image_url || "",
-        gallery: property.images || [] // Array of gallery images
+        gallery: property.images || [] 
       });
       
       // Reset form with existing data - Convert IDs to strings
@@ -155,9 +140,6 @@ export default function AdminPropertiesUpdateForm({ propertyId }) {
       Object.keys(PropertiesUpdateSchemas[currentStep].shape)
     );
     
-    console.log(`Step ${currentStep} validation:`, valid);
-    console.log(`Step ${currentStep} values:`, getValues());
-    console.log(`Step ${currentStep} errors:`, errors);
     
     if (valid && currentStep < steps.length - 1) {
       setCurrentStep((prev) => prev + 1);
@@ -169,12 +151,7 @@ export default function AdminPropertiesUpdateForm({ propertyId }) {
   };
 
   const onSubmit = async (data) => {
-    console.log("=== UPDATE SUBMIT DATA ===");
-    console.log("Full Form Data:", data);
-    console.log("Features:", data.features);
-
     const features = data.features || getValues("features") || [];
-    console.log("Features (manual check):", features);
 
     const formData = new FormData();
 
@@ -200,11 +177,7 @@ export default function AdminPropertiesUpdateForm({ propertyId }) {
       }
     }
 
-    // Debug: Log FormData
-    console.log("FormData entries:");
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
+   
 
     mutate(formData, {
       onSuccess: (res) => {
@@ -221,7 +194,6 @@ export default function AdminPropertiesUpdateForm({ propertyId }) {
       onError: (error) => {
         if (error.response?.status === 422) {
           const validationErrors = error.response.data.errors;
-          console.log("Validation Errors:", validationErrors);
           setServerErrors(validationErrors);
         } else {
           toast.custom((t) => (
@@ -239,12 +211,7 @@ export default function AdminPropertiesUpdateForm({ propertyId }) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading property data...</p>
-        </div>
-      </div>
+      <PageLoading />
     );
   }
 
@@ -270,7 +237,7 @@ export default function AdminPropertiesUpdateForm({ propertyId }) {
           getValues={getValues}
           watch={watch}
           control={control}
-          existingImages={currentStep === 2 ? existingImages : undefined} // Only pass to step 3 (PropertyFeaturesMediaStep)
+          existingImages={currentStep === 2 ? existingImages : undefined} 
         />
 
         {/* Navigation Buttons */}
