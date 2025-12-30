@@ -28,7 +28,6 @@ const LeafletMapInput = dynamic(
 export default function FindClient() {
   const [properties, setProperties] = useState([]);
   const router = useRouter();
-  // property types + categories
   const { data: responseData } = usePropertyQuery();
   const types = responseData?.types ?? [];
   const categories = responseData?.categories ?? [];
@@ -135,9 +134,6 @@ export default function FindClient() {
         {/* LEFT SIDE MAP */}
         <div className="col-span-12 md:col-span-6">
           <div className="bg-white h-full rounded-lg shadow-md p-4">
-            <h2 className="text-xl font-semibold text-gray-800 mb-3">
-              Property Map
-            </h2>
 
             <LeafletMapInput
               register={{

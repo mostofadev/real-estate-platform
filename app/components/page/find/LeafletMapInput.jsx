@@ -36,9 +36,7 @@ export default function LeafletMapInput({ register, setValue, errors = {} }) {
 
   return (
     <div className="my-6">
-      <label className="block mb-2 text-sm font-medium text-gray-900">
-        Select Property Location
-      </label>
+      
 
       {/* Map container with z-0 to stay below navbar */}
       <div className="relative z-0 rounded-lg overflow-hidden border border-gray-200 shadow-sm">

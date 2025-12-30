@@ -13,44 +13,57 @@ import InfoContent from "@/app/components/page/singleProperties/InfoContent";
 import FavoriteButton from "@/app/components/page/singleProperties/FavoriteButton";
 import PrimaryButton from "@/app/components/ui/button/Primary";
 import { useSingleProperty } from "@/app/hooks/useHomePage";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation"; // router add koren
 import BookingModal from "@/app/components/page/booking/BuyNowModal";
 import PageLoading from "@/app/components/ui/loader/PageLoading";
+import { showCustomToast } from "@/lib/showCustomToast"; // jodi toast lagey
 
 function Page() {
   const { id } = useParams();
+  const router = useRouter(); // add koren
 
   const [activeTab, setActiveTab] = useState("gallery");
   const [activeTabInfo, setActiveTabInfo] = useState("overview");
   const { data, isLoading, isError, error } = useSingleProperty(id);
 
-  console.log("single property", data);
   const singleProperty = data;
-  console.log(singleProperty);
-
-  // existing code...
+  const userToken = typeof window !== "undefined" ? localStorage.getItem("user_token") : null;
   const [bookingPopup, setBookingPopup] = useState(false);
 
-  const handleConfirmBooking = (formData) => {
-    console.log("Booking confirmed for:", singleProperty.title);
-    console.log("User Info:", formData);
-    setBookingPopup(false);
+  // Booking button handler add koren
+  const handleBookingClick = () => {
+    if (!userToken) {
+      showCustomToast({
+        title: "Login Required",
+        message: "Please login to book this property",
+        type: "error",
+      });
+      router.push(`/login?redirect=/property/${id}`);
+      return;
+    }
+    setBookingPopup(true);
   };
 
   if (isLoading) {
     return <PageLoading />;
   }
+  
   return (
     <MarginSection>
       <div className="my-4 flex justify-between lg:flex-row flex-col items-center px-2 gap-6">
         <ContentMenu activeTab={activeTab} setActiveTab={setActiveTab} />
         <div className="flex gap-3">
           <FavoriteButton property_id={singleProperty.id} />
-          <PrimaryButton onClick={() => setBookingPopup(true)}>
+          
+          {/* Replace koren */}
+          <PrimaryButton onClick={handleBookingClick}>
             Booking
           </PrimaryButton>
         </div>
       </div>
+      
+      {/* ... baki code same thakbe ... */}
+      
       <div className="my-4 lg:grid grid-cols-13 w-full ">
         <div className="col-span-10">
           <div className="">

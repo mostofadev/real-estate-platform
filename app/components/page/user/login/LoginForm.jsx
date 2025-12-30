@@ -7,7 +7,7 @@ import { loginSchema } from "@/app/Schema/LoginSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserAuthContext } from "@/app/Context/UserAuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import FormButton from "@/app/components/ui/button/SubmitButton";
 import TextInput from "@/app/components/ui/formAction/TextInput";
 import Checkbox from "@/app/components/ui/formAction/Checkbox";
@@ -15,6 +15,8 @@ import Checkbox from "@/app/components/ui/formAction/Checkbox";
 function LoginForm() {
   const { login } = useUserAuthContext();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectUrl = searchParams.get("redirect");
 
   const {
     register,
@@ -46,7 +48,11 @@ function LoginForm() {
     try {
       const response = await login(data);
       if (response.status === 200) {
-        router.push("/user/profile");
+        if (redirectUrl) {
+          router.push(redirectUrl);
+        } else {
+          router.push("/user/profile");
+        }
       }
     } catch (error) {
       console.log(error);
