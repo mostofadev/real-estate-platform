@@ -138,7 +138,7 @@ export default function AdminPropertiesForm() {
             type="success"
           />
         ));
-        // route.push("/admin/property");
+         route.push("/admin/property");
       },
       onError: (error) => {
         if (error.response?.status === 422) {
